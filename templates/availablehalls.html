@@ -1,0 +1,4 @@
+<h4>Screen Available On Given Date And Time</h4>
+{% for screen_id in screen %}
+<button onclick="selectShowHall({{ screen_id }})">Screen: {{ screen_id }}</button>
+{% endfor %}

@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>Movie Ticketing</title>
+	<link rel="icon" href="{{ url_for('static', filename='favicon-film.ico') }}">
+	<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.date.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.time.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container-fluid">
+		<div class="jumbotron login-header">
+			<!-- <i class="fas fa-popcorn"></i> -->
+			<h1>SignUp</h1>
+		</div>
+
+        <form action="/signup" method="POST">
+            <div class="jumbotron module">
+                
+                <input type="text" name="username" placeholder="username" required>
+                <input type="email" name="email" placeholder="email" required>
+                <input type="password" name="password" placeholder="password" required>
+                <button type="submit" class="btn btn-danger" value="Sign Up">Sign Up</button>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- <h4>Available Seats</h4>
+<h5>Gold</h5>
+{% for seat in goldSeats %}
+<button onClick="selectSeat({{ seat[0] }},'gold')" {{ seat[1] }}>{{ seat[0] }}</button>
+{% endfor %}
+<h5>Standard</h5>
+{% for seat in standardSeats %}
+<button onClick="selectSeat({{ seat[0] }},'standard')" {{ seat[1] }}>{{ seat[0] }}</button>
+{% endfor %} -->
+
+<h4>Available Seats</h4>
+<h5>Gold</h5>
+{% for seat in goldSeats %}
+<button 
+    onClick="selectSeat('{{ seat[0] }}', 'gold')" 
+    id="seat-{{ seat[0] }}" 
+    class="seat-button {{ 'selected' if seat[2] else '' }}" 
+    {{ seat[1] }}>
+    G{{ seat[0] }}
+</button>
+{% endfor %}
+
+<h5>Standard</h5>
+{% for seat in standardSeats %}
+<button 
+    onClick="selectSeat('{{ seat[0] }}', 'standard')" 
+    id="seat-{{ seat[0] }}" 
+    class="seat-button {{ 'selected' if seat[2] else '' }}" 
+    {{ seat[1] }}>
+    S{{ seat[0] }}
+</button>
+{% endfor %}
