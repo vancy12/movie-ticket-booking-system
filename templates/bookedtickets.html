@@ -2,6 +2,9 @@
 {% for ticket in tickets %}
 <div class="ticket">
 <h5>Ticket Number: {{ ticket[0] }}</h5>
-<h6>Seat Number: {{ ticket[1] }} / {{ ticket[2] }}</h6>
+    <h6>Seat Number: </h6>
+    {% for seat in ticket[1:] %}
+        <h6>{{ seat }}</h6>
+    {% endfor %}
 </div>
 {% endfor %}

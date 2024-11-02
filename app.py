@@ -235,7 +235,7 @@ def createBooking():
 	user_data = runQuery(f"SELECT username, email FROM users WHERE customer_id = {customerID}")
 	username, email = user_data[0][0], user_data[0][1]
 
-	res = runQuery("SELECT seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8, seat9, seat10 FROM tickets WHERE show_id = " + showID)
+	res = runQuery(f"SELECT seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8, seat9, seat10 FROM tickets WHERE show_id = {showID} AND ticket_no = '{str(ticketNo)}'")
 
     # Process each seat to determine its availability
 	seating = []
@@ -288,17 +288,23 @@ def getShowsOnDate():
 def getBookedTickets():
 	showID = request.form['showID']
 
-	res = runQuery("SELECT ticket_no,seat_no FROM booked_tickets WHERE show_id = "+showID+" order by seat_no")
-
+	res = runQuery("SELECT ticket_no FROM booked_tickets WHERE show_id = "+showID+"")
 	if res == []:
 		return '<h5>No Bookings!!</h5>'
-
+	
 	tickets = []
 	for i in res:
-		if i[1] > 1000:
-			tickets.append([i[0], i[1] - 1000, 'Gold'])
-		else:
-			tickets.append([i[0], i[1], 'Standard'])
+		info = []
+		info.append(i[0])
+
+		seats = runQuery(f"SELECT seat1,seat2,seat3,seat4,seat5,seat6,seat7,seat8,seat9,seat10 from tickets WHERE ticket_no = {i[0]} AND show_id = {showID}")
+		
+		print(seats)
+		for count in range(0,10):
+			if seats[0][count]:
+				info.append(seats[0][count])
+
+		tickets.append(info)
 
 	return render_template('bookedtickets.html', tickets = tickets)
 

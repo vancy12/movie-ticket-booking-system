@@ -13,7 +13,7 @@
 {% for seat in goldSeats %}
 <button 
     onClick="selectSeat('{{ seat[0] }}', 'gold')" 
-    id="seat-{{ seat[0] }}" 
+    id="seat-G{{ seat[0] }}" 
     class="seat-button {{ 'selected' if seat[2] else '' }}" 
     {{ seat[1] }}>
     G{{ seat[0] }}
@@ -24,7 +24,7 @@
 {% for seat in standardSeats %}
 <button 
     onClick="selectSeat('{{ seat[0] }}', 'standard')" 
-    id="seat-{{ seat[0] }}" 
+    id="seat-S{{ seat[0] }}" 
     class="seat-button {{ 'selected' if seat[2] else '' }}" 
     {{ seat[1] }}>
     S{{ seat[0] }}

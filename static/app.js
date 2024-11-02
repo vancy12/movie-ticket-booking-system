@@ -139,7 +139,7 @@ function getSeats(){
 // }
 
 function selectSeat(no, sclass) {
-    const seatButton = document.getElementById(`seat-${no}`);
+    const seatButton = document.getElementById(`seat-${sclass[0].toUpperCase()}${no}`);
 
     // Check if the seat is already selected
     const seatIndex = selectedSeats.findIndex(seat => seat.no === no && seat.sclass === sclass);
