@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Movie Ticketing</title>
-	<link rel="icon" href="{{ url_for('static', filename='favicon-film.ico') }}">
+	<title>QuickBook</title>
+	<link rel="icon" href="{{ url_for('static', filename='film_projector.ico') }}">
 	<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
@@ -14,13 +14,13 @@
 	<div class="container-fluid">
 		<div class="jumbotron login-header">
 			<!-- <i class="fas fa-popcorn"></i> -->
-			<h1>Movie Ticketing System</h1>
+			<h1>QuickBook</h1>
 		</div>
 		<div class="jumbotron module">
 			<input type="text" name="username" placeholder="Username" autocomplete="off">
 			<input type="password" name="password" placeholder="Password">
-			<button type="button" class="btn btn-danger" onclick="login()">Login</button>
-			<button type="button" class="btn btn-danger" onclick="window.location.href='/signup'">Signup</button>
+			<button type="button" class="btn btn-success" onclick="login()">Login</button>
+			<button type="button" class="btn btn-success" onclick="window.location.href='/signup'">Signup</button>
 		</div>
 	</div>
 	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>

@@ -22,10 +22,16 @@
                 <input type="text" name="username" placeholder="username" required>
                 <input type="email" name="email" placeholder="email" required>
                 <input type="password" name="password" placeholder="password" required>
-                <button type="submit" class="btn btn-danger" value="Sign Up">Sign Up</button>
+                <button type="submit" class="btn btn-success" value="Sign Up">Sign Up</button>
             </div>
         </form>
 
     </div>
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.date.js') }}"></script>
+	<script src="{{ url_for('static', filename='lib/picker.time.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
 </body>
 </html>

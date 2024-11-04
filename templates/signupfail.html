@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='icons/css/all.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.date.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/themes/default.time.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="jumbotron login-header after-login">
+                <h1>QuickBook</h1>
+            </div>
+            <div class="jumbotron module module-after-login">
+                <h4 style="display: block; margin-bottom: 50px">Duplicate Username</h4>
+                <button onclick="location.href='./signup'" class="btn btn-success">Try Again</button>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
