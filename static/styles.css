@@ -17,19 +17,20 @@ body{
 	padding-right: 0;
 }
 .login-header{
-	/* background: #424242; */
-	background: #353536;
+	background: #2A2A2A;
+	/* background:  #3A3B3C; */
 	text-align: center;
 	border-radius: 33%;
 	padding-top: 150px;
 	padding-bottom: 50px;
 	z-index: 700;
-	position: relative;
-	box-shadow: 0 10px 30px rgba(17, 17, 17, 0.10), 0 6px 12px rgba(17, 17, 17, 0.10);
-	transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+    /* width: 50%; */
+    position: relative;
+	box-shadow: 0 10px 30px rgba(164, 164, 164, 0.1), 0 6px 12px rgba(164, 164, 164, 0.1);
+	/* transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375); */
 }
 .after-login{
-	border-radius: 100px;
+	/* border-radius: 100px; */
 	margin-left: 50px;
 	margin-right: 50px;
 	padding-bottom: 5px;
@@ -51,23 +52,23 @@ body{
 	font-size: 75px;
 	display: inline;
 	vertical-align: middle;
-	transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+	/* transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375); */
 }
 .login-header i{
-	color: #fbc02d;
+	color: #7ffb2d;
 	font-size: 100px;
 	display: inline;
 	vertical-align: middle;
 	margin-right: 2%;
-	transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+	/* transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375); */
 }
 .login-header h4{
 	color: #FFFFFF;
 	font-size: 20px;
-	transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+	/* transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375); */
 }
 .module{
-	transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+	/* transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375); */
 	z-index: 500;
 	width: 50%;
 	margin: -150px auto 50px;
@@ -76,7 +77,9 @@ body{
 	border-radius: 100px;
 	text-align: center;
 	background-color: #2A2A2A;
-	box-shadow: 0 10px 30px rgba(17, 17, 17, 0.10), 0 6px 12px rgba(17, 17, 17, 0.10);
+	box-shadow: 0 10px 30px rgba(164, 164, 164, 0.1), 0 6px 12px rgba(164, 164, 164, 0.1);
+	/* box-shadow: 0 10px 30px rgba(17, 17, 17, 0.10), 0 6px 12px rgba(17, 17, 17, 0.10); */
+
 }
 .module-after-login{
 	width: 70%;
@@ -102,8 +105,7 @@ body{
 }
 .module button.btn, button{
 	font-family: 'productbold';
-	/* background: #fbc02d; */
-	background: #9a3a43;
+	background: #1c9611;
 	color: #FFFFFF;
 	font-size: 20px;
 	border-radius: 20px;
@@ -148,7 +150,7 @@ h4{
 }
 .ticket{
 	display: inline-block;
-	border: 2px solid #fbc02d;
+	border: 2px solid #1c9611;
 	border-radius: 20px;
 	margin: 15px 10px;
 	padding-left: 10px;
@@ -200,6 +202,6 @@ h6{
 	border-top: none;
 }
 .seat-button.selected {
-    background-color: #4CAF50; /* or any color indicating selection */
+    background-color: #4CAF50;
     color: white;
-}
+} 

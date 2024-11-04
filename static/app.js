@@ -291,7 +291,7 @@ function filledMovieForm(){
 }
 function createShow(){
 	$('#options button').prop('disabled', true);
-	$('#manager-dynamic-1').html('<input id="datepicker-manager-3" placeholder="Pick a date"><input id="timepicker-manager-1" placeholder="Pick a time"><button onclick="getValidMovies()" class="btn-primary">Submit</button>');
+	$('#manager-dynamic-1').html('<input id="datepicker-manager-3" placeholder="Pick a date"><input id="timepicker-manager-1" placeholder="Pick a time"><button onclick="getValidMovies()" class="btn-success">Submit</button>');
 	$('#datepicker-manager-3').pickadate({
 				formatSubmit: 'yyyy/mm/dd',
  				hiddenName: true,
@@ -386,7 +386,7 @@ function alterPricing(){
 function alterPrice(mpriceID){
 	priceID = mpriceID;
 	$('#manager-dynamic-1 button').prop('disabled', true);
-	$('#manager-dynamic-2').html('<input type="number" name="new_price" placeholder="New price for Standard $"><button onclick="changePrice()" class="btn-info">Update</button>');
+	$('#manager-dynamic-2').html('<input type="number" name="new_price" placeholder="New price for Standard ₹"><button onclick="changePrice()" class="btn-info">Update</button>');
 }
 function changePrice(){
 	newPrice = $('#manager-dynamic-2 input')[0].value;
