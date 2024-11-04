@@ -24,15 +24,18 @@ def signup():
 
         # Hash the password before storing it for security reasons
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-        print(len(hashed_password))
+        # print(len(hashed_password))
 
         try:
             # Insert user information into the users table
-            
-            runQuery("INSERT INTO users (username, email, password) VALUES ('"+username+"','"+email+"','"+hashed_password+"')")
-            customer_id = runQuery(f"SELECT customer_id FROM users WHERE username = \"{str(username)}\"")
-            session['customerID'] = customer_id
-            return redirect(url_for('renderLoginPage'))
+            res = runQuery(f"SELECT username FROM users WHERE username = {str(username)}")
+            if not res:
+                runQuery("INSERT INTO users (username, email, password) VALUES ('"+username+"','"+email+"','"+hashed_password+"')")
+                customer_id = runQuery(f"SELECT customer_id FROM users WHERE username = \"{str(username)}\"")
+                session['customerID'] = customer_id
+                return redirect(url_for('renderLoginPage'))
+            else:
+                return render_template('signupfail.html')
 
         except Exception as e:
             print(e)
@@ -67,6 +70,7 @@ def verifyAndRenderRespective():
 			if user and check_password_hash(user[0][0], password):
                 # If password is correct, log the user in
 				res = runQuery('call delete_old()')
+				print(f"after calling delete old", res)
 				customer_id = runQuery(f"SELECT customer_id FROM users WHERE username = \"{str(username)}\"")
 				session['customerID'] = customer_id
 				return render_template('cashier.html', username=username)
@@ -183,10 +187,10 @@ def getPriceForClass():
 
 	total_price = price * len(selectedSeats)
 
-	return '<h5>Ticket Price: $ '+str(total_price)+'</h5>\
-	<button onclick="confirmBooking()" class="btn-warning">Confirm Booking</button>'
+	return '<h5>Ticket Price: ₹ '+str(total_price)+'</h5>\
+	<button onclick="confirmBooking()" class="btn-success">Confirm Booking</button>'
 
-
+# Routes for manager
 @app.route('/insertBooking', methods = ['POST'])
 def createBooking():
 	customerID = session.get('customerID')
