@@ -28,8 +28,8 @@ def signup():
 
         try:
             # Insert user information into the users table
-            res = runQuery(f"SELECT username FROM users WHERE username = {str(username)}")
-            if not res:
+            res = runQuery(f"SELECT username FROM users WHERE username = '{str(username)}'")
+            if res == []:
                 runQuery("INSERT INTO users (username, email, password) VALUES ('"+username+"','"+email+"','"+hashed_password+"')")
                 customer_id = runQuery(f"SELECT customer_id FROM users WHERE username = \"{str(username)}\"")
                 session['customerID'] = customer_id
@@ -234,6 +234,8 @@ def createBooking():
 
 	price = runQuery(f"SELECT price FROM price_listing WHERE price_id = {price_id}")
 	price = price[0][0]
+	if selectedSeats[0]['sclass'] == 'gold':
+		price *= 1.5
 	price = price*no_of_tickets
 
 	user_data = runQuery(f"SELECT username, email FROM users WHERE customer_id = {customerID}")
