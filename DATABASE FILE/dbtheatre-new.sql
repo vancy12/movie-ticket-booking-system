@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Mar 10, 2022 at 02:17 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -23,28 +14,32 @@ SET time_zone = "+00:00";
 -- CREATE DATABASE dbtheatre; 
 USE dbtheatre;
 
-
-
 DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_old` ()  begin
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_old` ()  
+begin
+  DECLARE curdate DATE;
+  DECLARE curtime INT;
+  SET curdate = CURDATE();
+  SET curtime = CAST(DATE_FORMAT(NOW(), '%H%i') AS UNSIGNED); 
 
-	declare curdate date;
-set curdate=curdate();
 
-DELETE FROM shows 
-WHERE datediff(Date,curdate)<0;
+  INSERT INTO debug_log (message) VALUES 
+  (CONCAT("Current Date: ", curdate, ", Current Time: ", curtime));
 
-DELETE FROM shows 
-WHERE movie_id IN 
-(SELECT movie_id 
-FROM movies
-WHERE datediff(show_end,curdate)<0);
+  DELETE FROM shows 
+  WHERE (Date < curdate) OR (Date = curdate AND time < curtime);
+  
+  DELETE FROM shows 
+  WHERE movie_id IN 
+  (SELECT movie_id 
+  FROM movies
+  WHERE show_end < curdate);
 
-DELETE FROM movies 
-WHERE datediff(show_end,curdate)<0;
+  DELETE FROM movies 
+  WHERE show_end < curdate;
 
 end$$
 
@@ -67,34 +62,6 @@ CREATE TABLE `booked_tickets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tickets`
---
-
-CREATE TABLE `tickets`(
-	`show_id` int(11) NOT NULL,
-	`ticket_no` int(11) NOT NULL,
-    `seat1` VARCHAR(5) NOT NULL,
-    `seat2` VARCHAR(5) default NULL,
-    `seat3` VARCHAR(5) default NULL,
-    `seat4` VARCHAR(5) default NULL,
-    `seat5` VARCHAR(5) default NULL,
-    `seat6` VARCHAR(5) default NULL,
-    `seat7` VARCHAR(5) default NULL,
-    `seat8` VARCHAR(5) default NULL,
-    `seat9` VARCHAR(5) default NULL,
-    `seat10` VARCHAR(5) default NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-ALTER TABLE tickets
-ADD PRIMARY KEY (`ticket_no`,`show_id`);
- 
-ALTER TABLE tickets 
-ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY(`ticket_no`) REFERENCES `booked_tickets`(`ticket_no`) ON DELETE CASCADE,
-ADD CONSTRAINT `tickets_ibfk_2` FOREIGN KEY(`show_id`) REFERENCES `booked_tickets`(`show_id`) ON DELETE CASCADE;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `screen`
 --
 
@@ -105,16 +72,7 @@ CREATE TABLE `screen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `screen`
---
-CREATE TABLE users (
-    `customer_id` INT AUTO_INCREMENT PRIMARY KEY,
-    `username` VARCHAR(50) NOT NULL UNIQUE,
-    `email` VARCHAR(100) NOT NULL UNIQUE,
-    `password` VARCHAR(1000) NOT NULL
-    
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+-- Inserting data for table `screen`
 --
  
 INSERT INTO `screen` (`screen_id`, `class`, `no_of_seats`) VALUES
@@ -141,6 +99,20 @@ WHERE dayname(s.Date)=p.day AND s.type=p.type);
 end
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE users (
+    `customer_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(50) NOT NULL UNIQUE,
+    `email` VARCHAR(100) NOT NULL UNIQUE,
+    `password` VARCHAR(1000) NOT NULL
+    
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -272,20 +244,30 @@ CREATE TABLE report (
 	`seat_class` VARCHAR(10) DEFAULT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-ALTER TABLE `report`
-  ADD CONSTRAINT `report_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON delete cascade,
-  ADD CONSTRAINT `report_ibfk_2` FOREIGN KEY (`screen_id`) REFERENCES `screen` (`screen_id`),
-  ADD CONSTRAINT `report_ibfk_3` FOREIGN KEY (`price_id`) REFERENCES `price_listing` (`price_id`),
-  ADD CONSTRAINT `report_ibfk_4` FOREIGN KEY (`show_id`) REFERENCES `shows` (`show_id`) ON delete cascade,
-  ADD CONSTRAINT `report_ibfk_5` FOREIGN KEY (`customer_id`) REFERENCES `users` (`customer_id`) ON delete cascade,
-  ADD CONSTRAINT `report_ibfk_6` FOREIGN KEY (`ticket_no`) REFERENCES `booked_tickets` (`ticket_no`) ON delete cascade;
-  
-  
-  
 
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Table structure for table `tickets`
+--
+
+CREATE TABLE `tickets`(
+	`show_id` int(11) NOT NULL,
+	`ticket_no` int(11) NOT NULL,
+    `seat1` VARCHAR(5) NOT NULL,
+    `seat2` VARCHAR(5) default NULL,
+    `seat3` VARCHAR(5) default NULL,
+    `seat4` VARCHAR(5) default NULL,
+    `seat5` VARCHAR(5) default NULL,
+    `seat6` VARCHAR(5) default NULL,
+    `seat7` VARCHAR(5) default NULL,
+    `seat8` VARCHAR(5) default NULL,
+    `seat9` VARCHAR(5) default NULL,
+    `seat10` VARCHAR(5) default NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------
+-- Indexes for tables
 --
 
 --
@@ -328,11 +310,11 @@ ALTER TABLE `shows`
 ALTER TABLE `types`
   ADD PRIMARY KEY (`movie_id`);
 
---
--- Constraints for dumped tables
+-- ----------------------------------------------------------
+-- Constraints for tables
 --
 
---
+-- 
 -- Constraints for table `booked_tickets`
 --
 ALTER TABLE `booked_tickets`
@@ -353,6 +335,29 @@ ALTER TABLE `shows`
 ALTER TABLE `types`
   ADD CONSTRAINT `types_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE CASCADE;
 COMMIT;
+
+--
+-- Constraints for table `report`
+--
+ALTER TABLE `report`
+  ADD CONSTRAINT `report_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON delete cascade,
+  ADD CONSTRAINT `report_ibfk_2` FOREIGN KEY (`screen_id`) REFERENCES `screen` (`screen_id`),
+  ADD CONSTRAINT `report_ibfk_3` FOREIGN KEY (`price_id`) REFERENCES `price_listing` (`price_id`),
+  ADD CONSTRAINT `report_ibfk_4` FOREIGN KEY (`show_id`) REFERENCES `shows` (`show_id`) ON delete cascade,
+  ADD CONSTRAINT `report_ibfk_5` FOREIGN KEY (`customer_id`) REFERENCES `users` (`customer_id`) ON delete cascade,
+  ADD CONSTRAINT `report_ibfk_6` FOREIGN KEY (`ticket_no`) REFERENCES `booked_tickets` (`ticket_no`) ON delete cascade;
+
+--
+-- Constraints for table `tickets`
+--
+ALTER TABLE tickets
+ADD PRIMARY KEY (`ticket_no`,`show_id`);
+ 
+ALTER TABLE tickets 
+ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY(`ticket_no`) REFERENCES `booked_tickets`(`ticket_no`) ON DELETE CASCADE,
+ADD CONSTRAINT `tickets_ibfk_2` FOREIGN KEY(`show_id`) REFERENCES `booked_tickets`(`show_id`) ON DELETE CASCADE;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
